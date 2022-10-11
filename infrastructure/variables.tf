@@ -1,5 +1,3 @@
-# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-# SPDX-License-Identifier: MIT-0
 
 variable "aws_profile" {
   description = "The profile name that you have configured in the file .aws/credentials"
@@ -42,19 +40,19 @@ variable "port_app_client" {
 variable "buildspec_path" {
   description = "The location of the buildspec file"
   type        = string
-  default     = "./Infrastructure/Templates/buildspec.yml"
+  default     = "./infrastructure/Templates/buildspec.yml"
 }
 
 variable "folder_path_server" {
   description = "The location of the server files"
   type        = string
-  default     = "./Code/server/."
+  default     = "./backend/server/."
 }
 
 variable "folder_path_client" {
   description = "The location of the client files"
   type        = string
-  default     = "./Code/client/."
+  default     = "./frontend/client/."
 }
 
 variable "container_name" {
