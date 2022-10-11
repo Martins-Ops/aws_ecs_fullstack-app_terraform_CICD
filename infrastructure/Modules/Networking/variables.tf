@@ -1,5 +1,5 @@
 
-variable "cidr_block" {
+variable "cidr" {
   type = string
 }
 
