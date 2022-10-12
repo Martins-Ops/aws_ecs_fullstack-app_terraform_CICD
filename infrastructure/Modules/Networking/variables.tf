@@ -1,6 +1,7 @@
 
 variable "cidr" {
-  type = string
+  description = "CIDR block"
+  type        = list(any)
 }
 
 variable "name" {
