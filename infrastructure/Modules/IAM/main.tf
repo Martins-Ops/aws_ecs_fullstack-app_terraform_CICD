@@ -1,3 +1,5 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
 
 /*===========================================
       AWS IAM for different resources
@@ -122,7 +124,7 @@ resource "aws_iam_policy" "policy_for_role" {
 }
 
 resource "aws_iam_policy" "policy_for_ecs_task_role" {
-  count       = var.create_ecs_policy == true ? 1 : 0
+  count       = var.create_ecs_role == true ? 1 : 0
   name        = "Policy-${var.name_ecs_task_role}"
   description = "IAM Policy for Role ${var.name_ecs_task_role}"
   policy      = data.aws_iam_policy_document.role_policy_ecs_task_role.json
@@ -134,7 +136,7 @@ resource "aws_iam_policy" "policy_for_ecs_task_role" {
 
 # ------- IAM Policies Attachments -------
 resource "aws_iam_role_policy_attachment" "ecs_attachment" {
-  count      = var.create_ecs_policy == true ? 1 : 0
+  count      = var.create_ecs_role == true ? 1 : 0
   policy_arn = aws_iam_policy.policy_for_ecs_task_role[0].arn
   role       = aws_iam_role.ecs_task_role[0].name
 

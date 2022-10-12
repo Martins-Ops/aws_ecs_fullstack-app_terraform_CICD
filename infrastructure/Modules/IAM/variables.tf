@@ -1,4 +1,5 @@
-
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
 
 variable "name" {
   description = "The name for the Role"
@@ -42,11 +43,6 @@ variable "create_policy" {
   default     = false
 }
 
-variable "create_ecs_policy" {
-  description = "Set this variable to true if you want to create an IAM Policy"
-  type        = bool
-  default     = false
-}
 variable "attach_to" {
   description = "The ARN or role name to attach the policy created"
   type        = string
