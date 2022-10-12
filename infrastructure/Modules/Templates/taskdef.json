@@ -16,9 +16,10 @@
       },
       "portMappings": [
         {
-          "hostPort": 3001 ,
+         
+          "hostPort": <SERVICE_PORT>,
           "protocol": "tcp",
-          "containerPort": 3001
+          "containerPort": <SERVICE_PORT>
         }
       ]
     }
