@@ -35,7 +35,7 @@ variable "port_app_client" {
 variable "buildspec_path" {
   description = "The location of the buildspec file"
   type        = string
-  default     = "./infrastructure/Templates/buildspec.yml"
+  default     = "./infrastructure/Modules/Templates/buildspec.yml"
 }
 
 variable "folder_path_server" {
