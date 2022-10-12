@@ -14,9 +14,9 @@ data "aws_caller_identity" "id_current_account" {}
 
 # ------- Networking -------
 module "networking" {
-  source = "./Modules/Networking"
-  cidr   = ["10.120.0.0/16"]
-  name   = var.environment_name
+  source     = "./Modules/Networking"
+  cidr       =  ["10.120.0.0/16"]
+  name       = var.environment_name
 }
 
 # ------- Creating Target Group for the server ALB blue environment -------
@@ -119,6 +119,7 @@ module "ecs_role" {
   create_ecs_role    = true
   name               = var.iam_role_name["ecs"]
   name_ecs_task_role = var.iam_role_name["ecs_task_role"]
+  dynamodb_table     = [module.dynamodb_table.dynamodb_table_arn]
 }
 
 # ------- Creating a IAM Policy for role -------
@@ -126,10 +127,6 @@ module "ecs_role_policy" {
   source              = "./Modules/IAM"
   name                = "ecs-ecr-${var.environment_name}"
   create_policy       = true
-  create_ecs_policy   = true
-  dynamodb_table     = [module.dynamodb_table.dynamodb_table_arn]
-  s3_bucket_assets   = [module.s3_assets.s3_bucket_arn]
-
   attach_to           = module.ecs_role.name_role
 }
 
@@ -261,12 +258,14 @@ module "devops_role" {
   source             = "./Modules/IAM"
   create_devops_role = true
   name               = var.iam_role_name["devops"]
+  name_ecs_task_role     = var.iam_role_name["ecs_task_role"]
 }
 
 module "codedeploy_role" {
   source                 = "./Modules/IAM"
   create_codedeploy_role = true
   name                   = var.iam_role_name["codedeploy"]
+  name_ecs_task_role     = var.iam_role_name["ecs_task_role"]
 }
 
 # ------- Creating an IAM Policy for role ------- 
@@ -276,6 +275,7 @@ module "policy_devops_role" {
   create_policy         = true
   attach_to             = module.devops_role.name_role
   create_devops_policy  = true
+  name_ecs_task_role     = var.iam_role_name["ecs_task_role"]
   ecr_repositories      = [module.ecr_server.ecr_repository_arn, module.ecr_client.ecr_repository_arn]
   code_build_projects   = [module.codebuild_client.project_arn, module.codebuild_server.project_arn]
   code_deploy_resources = [module.codedeploy_server.application_arn, module.codedeploy_server.deployment_group_arn, module.codedeploy_client.application_arn, module.codedeploy_client.deployment_group_arn]
